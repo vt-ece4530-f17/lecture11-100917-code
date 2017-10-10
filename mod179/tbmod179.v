@@ -24,14 +24,19 @@ module tbmod179;
 	#300
     while (1)
 	  begin
-	  x     = $random % 65535;
-	  $display("%d -> %d", x, x % 179);
-	  start = 1'b1;
-	  #100
-	  start = 1'b0;
-	  #3000;
+	     x     = $random % 65535;
+	     start = 1'b1;
+
+	     @(posedge clk) ;
+	     
+	     start = 1'b0;
+	     
+	     @(posedge done)	       
+	       $display("%d -> Expect %d Computed %d", x, x % 179, z);
+	     
+	     @(posedge clk) ;
 	  end
-	end
+    end
 	
   always
     #50 clk = ~clk;
